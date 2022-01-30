@@ -13,6 +13,11 @@
 
         function fn1() {
             var bits_id = document.getElementById("bits_id").value;
+            if(bits_id.slice(-1) !== "P" && bits_id.slice(-1) !== "p"){
+                var bits_slice = bits_id.slice(-4,); 
+            }else{
+                var bits_slice = bits_id.slice(-5, -1);
+            }
 
             var ids = [];
             var emails = [];
@@ -39,7 +44,8 @@
 
                 ids.forEach(element => {
                     temp_branch = []
-                    if (element.includes(bits_id.slice(-5, -1))) {
+                    
+                    if (element.includes(bits_slice)) {
                         idx = ids.indexOf(element);
                         ans_ids.push(ids[idx]);
                         ans_emails.push(emails[idx]);
