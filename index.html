@@ -35,9 +35,6 @@
                 ids = rows.map((row) => (row.split(','))[0]);
                 emails = rows.map((row) => (row.split(','))[1]);
                 names = rows.map((row) => (row.split(','))[2]);
-                console.log(ids);
-                console.log(emails);
-                console.log(names);
 
                 ids.forEach(element => {
 
@@ -55,10 +52,10 @@
                         });
                     }
                 });
-                console.log(ans_ids);
-                console.log(ans_names);
-                console.log(ans_emails);
-                console.log(ans_branch);
+
+                if(!ans_ids){
+                    alert("No pop or mom found :(")
+                }
 
                 for (let i = 0; i < ans_ids.length; i++) {
                     var parent = document.getElementById("parentlist");
