@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
 
 <head>
     <title>Find Roll Number Mom And Pop</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+        integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 
     <script type="text/javascript">
 
@@ -23,7 +24,7 @@
             var ans_branch = [];
             var branch_codes = ['A1', 'A2', 'A3', 'A4', 'A5', 'A7', 'A8', 'AA', 'AB', 'B1', 'B2', 'B3', 'B4', 'B5'];
             var branch_names = ['Chemical', 'Civil', 'EEE', 'Mechanical', 'B. Pharma', 'Computer Science', 'EnI', 'ECE', 'Manufacturing', 'Msc. Bio', 'Msc. Chemistry', 'Msc. Eco', 'Msc. Math', 'Msc. Physics'];
-            var ans_branch = [];
+            var ans_branch = [[]];
 
             $.ajax({
                 url: 'mailingList_full.csv',
@@ -37,7 +38,7 @@
                 names = rows.map((row) => (row.split(','))[2]);
 
                 ids.forEach(element => {
-
+                    temp_branch = []
                     if (element.includes(bits_id.slice(-5, -1))) {
                         idx = ids.indexOf(element);
                         ans_ids.push(ids[idx]);
@@ -46,21 +47,32 @@
 
                         branch_codes.forEach(code => {
                             if (element.includes(code)) {
+
                                 idx_branch = branch_codes.indexOf(code);
-                                ans_branch.push(branch_names[idx_branch]);
+                                temp_branch.push(branch_names[idx_branch]);
+                                console.log(temp_branch)
                             }
+
+
                         });
+                        if (temp_branch) {
+                            ans_branch.push(temp_branch)
+                        }
                     }
+
                 });
 
-                if(!ans_ids){
+                if (!ans_ids) {
                     alert("No pop or mom found :(")
                 }
+                    ans_branch = ans_branch.slice(1,)
 
                 for (let i = 0; i < ans_ids.length; i++) {
                     var parent = document.getElementById("parentlist");
                     var child = document.createElement('div');
-                    
+
+
+                    console.log(ans_branch)
                     child.innerHTML = '<p class = "card-text">BITS ID: ' + ans_ids[i] + '</p>' +
                         '<p "card-title">Name: ' + ans_names[i] + '</p>' +
                         '<p "card-text">Branch: ' + ans_branch[i] + '</p>' +
@@ -76,25 +88,30 @@
 </head>
 
 <body>
-    <div class = "page-header">
-        <h1>Find Your ID Pop or ID Mom</h1>    
+    <div class="page-header">
+        <h1>Find Your ID Pop or ID Mom</h1>
         <small>And maybe even ask them for a treat</small>
     </div>
 
-    <div class = "form-group">
+    <div class="form-group">
         <label>BITS ID</label>
-        <input id="bits_id" class = "form-control" placeholder="Enter Your BITS Id">
-        <small class = "form-text text-muted">Also maybe learn to give a formal intro lol</small>
+        <input id="bits_id" class="form-control" placeholder="Enter Your BITS Id">
+        <small class="form-text text-muted">Also maybe learn to give a formal intro lol</small>
     </div>
-        <button onclick="fn1()" id="btn1" class="btn btn-primary" type = "button">Submit</button>
+    <button onclick="fn1()" id="btn1" class="btn btn-primary" type="button">Submit</button>
     <div id="parentlist"></div>
 
-    <div class = "jumbotron">
-        <p>Hope you found your mom and pop. Here's a blog I write. It would be great if you could check it out and drop a 	&#128079;</p>
-        <button class = "btn btn-primary" type = "button"><a href = https://medium.com/@madhav-s/why-we-may-already-be-in-the-metaverse-679ba077bf75 style= "color: white">Why We may already be in the metaverse</a></button>
+    <div class="jumbotron">
+        <p>Hope you found your mom and pop. Here's a blog I write. It would be great if you could check it out and drop
+            a &#128079;</p>
+        <button class="btn btn-primary" type="button"><a
+                href=https://medium.com/@madhav-s/why-we-may-already-be-in-the-metaverse-679ba077bf75
+                style="color: white">Why We may already be in the metaverse</a></button>
     </div>
 </body>
-<footer><p>A project by Madhav Singal and Rahulraj Jhawar</p></footer>
+<footer>
+    <p>A project by Madhav Singal and Rahulraj Jhawar</p>
+</footer>
 <script>
     var input = document.getElementById("bits_id");
 
