@@ -13,10 +13,16 @@
 
         function fn1() {
             var bits_id = document.getElementById("bits_id").value;
-            if(bits_id.slice(-1) !== "P" && bits_id.slice(-1) !== "p"){
-                var bits_slice = bits_id.slice(-4,); 
-            }else{
+            if(bits_id.slice(-1) === "P" || bits_id.slice(-1) === "p"){
                 var bits_slice = bits_id.slice(-5, -1);
+                var campus = "pilani" 
+            }else if (bits_id.slice(-1) === "G" || bits_id.slice(-1) === "g"){
+                var campus = "goa"
+                var bits_slice = bits_id.slice(-5, -1) + "G";
+                
+            }else{
+                var campus = "none"
+                var bits_slice = bits_id.slice(-4,);
             }
 
             var ids = [];
@@ -32,8 +38,15 @@
             var branch_names = ['Chemical', 'Civil', 'EEE', 'Mechanical', 'B. Pharma', 'Computer Science', 'EnI', 'ECE', 'Manufacturing', 'Msc. Bio', 'Msc. Chemistry', 'Msc. Eco', 'Msc. Math', 'Msc. Physics'];
             var ans_branch = [[]];
 
+            var filename = 'mailingList_full.csv';
+            
+
+            if (campus === "goa"){
+                filename = 'mailing_list_goa.csv';
+            }
+
             $.ajax({
-                url: 'mailingList_full.csv',
+                url: filename,
                 dataType: 'text',
             }).done(successFunction);
 
@@ -134,7 +147,7 @@
     <div class="form-group">
         <label>BITS ID</label>
         <input id="bits_id" class="form-control" placeholder="Enter Your BITS Id">
-        <small class="form-text text-muted">Also maybe learn to give a formal intro lol</small>
+        <small class="form-text text-muted">Don't forget to add the first letter of your campus at the end (Also maybe learn to give a formal intro lol)</small>
     </div>
     <button onclick="fn1()" id="btn1" class="btn btn-primary" type="button">Submit</button>
     <div id="parentlist"><div id = "orphan"></div></div>
