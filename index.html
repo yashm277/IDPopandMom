@@ -22,6 +22,7 @@
             var ids = [];
             var emails = [];
             var names = [];
+            var orphan = false;
 
             var ans_ids = [];
             var ans_emails = [];
@@ -68,17 +69,48 @@
 
                 });
 
-                if (!ans_ids) {
-                    alert("No pop or mom found :(")
+                if (ans_ids.length === 0) {
+                    orphan = true;
+                    ans_ids.push(ids[Math.floor((Math.random()*ids.length))]);
+                    ans_ids.push(ids[Math.floor((Math.random()*ids.length))]);
+                    ans_ids.push(ids[Math.floor((Math.random()*ids.length))]);
+                    ans_ids.slice(0,3);
+
+                    ans_ids.forEach(element => {
+                    temp_branch = []
+                    
+                        idx = ids.indexOf(element);
+                        ans_emails.push(emails[idx]);
+                        ans_names.push(names[idx]);
+
+                        branch_codes.forEach(code => {
+                            if (element.includes(code)) {
+
+                                idx_branch = branch_codes.indexOf(code);
+                                temp_branch.push(branch_names[idx_branch]);
+                                console.log(temp_branch)
+                            }
+
+
+                        });
+                        if (temp_branch) {
+                            ans_branch.push(temp_branch)
+                        }
+                    
+
+                });
                 }
+
                     ans_branch = ans_branch.slice(1,)
 
                 for (let i = 0; i < ans_ids.length; i++) {
                     var parent = document.getElementById("parentlist");
                     var child = document.createElement('div');
+                    var orphanDiv = document.getElementById("orphan");
 
-
-                    console.log(ans_branch)
+                    if (orphan){
+                        orphanDiv.innerHTML = "<p>Aww. Looks like you don't have an ID mom or pop. But here's some people who might adopt you &#128514; </p>"
+                    }
                     child.innerHTML = '<p class = "card-text">BITS ID: ' + ans_ids[i] + '</p>' +
                         '<p "card-title">Name: ' + ans_names[i] + '</p>' +
                         '<p "card-text">Branch: ' + ans_branch[i] + '</p>' +
@@ -88,7 +120,7 @@
                 };
             }
 
-            document.getElementById("parentlist").innerHTML = '';
+            document.getElementById("parentlist").innerHTML = '<div id = "orphan"></div>';
         }
     </script>
 </head>
@@ -105,7 +137,7 @@
         <small class="form-text text-muted">Also maybe learn to give a formal intro lol</small>
     </div>
     <button onclick="fn1()" id="btn1" class="btn btn-primary" type="button">Submit</button>
-    <div id="parentlist"></div>
+    <div id="parentlist"><div id = "orphan"></div></div>
 
     <div class="jumbotron">
         <p>Hope you found your mom and pop. Here's a blog I write. It would be great if you could check it out and drop
